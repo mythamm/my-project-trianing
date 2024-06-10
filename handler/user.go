@@ -29,7 +29,7 @@ func (h *userHandler) GetUserById(c *gin.Context) {
 	err := c.BindJSON(&req)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"Error": err.Error(), //this error is thrown
+			"Error": err.Error(), 
 		})
 		return
 	}
@@ -49,17 +49,14 @@ func (h *userHandler) CreateNewUser(c *gin.Context) {
 	err := c.BindJSON(&req)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"Error": err.Error(), //this error is thrown
+			"Error": err.Error(),
 		})
 		return
 	}
 
-	var validate = validator.New()
 	// Validate the request
+	var validate = validator.New()
 	if err := validate.Struct(req); err != nil {
-		// Return validation errors
-		// http.Error(w, fmt.Sprintf("Validation error: %s", err), http.StatusBadRequest)
-		// return 
 		user.Status_code = http.StatusBadRequest
 		user.Status_desc =fmt.Sprintf("Validation error: %s", err)
 		c.JSON(http.StatusBadRequest, user)
@@ -84,14 +81,13 @@ func (h *userHandler) UpdateLastLogin(c *gin.Context) {
 	fmt.Println("req " , req)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"Error": err.Error(), //this error is thrown
+			"Error": err.Error(),
 		})
 		return
 	}
 
-	fmt.Println("req " , req)
-	var validate = validator.New()
 	// Validate the request
+	var validate = validator.New()
 	if err := validate.Struct(req); err != nil {
 		user.Status_code = http.StatusBadRequest
 		user.Status_desc =fmt.Sprintf("Validation error: %s", err)
@@ -99,7 +95,6 @@ func (h *userHandler) UpdateLastLogin(c *gin.Context) {
 		return
 	}
 
-	fmt.Println("after validate")
 	user, err = h.userService.UpdateLastLogin(req.User_id)
 	if err != nil {
 		c.JSON(http.StatusBadGateway, user)
@@ -116,7 +111,7 @@ func (h *userHandler) DeleteUser(c *gin.Context) {
 	err := c.BindJSON(&req)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"Error": err.Error(), //this error is thrown
+			"Error": err.Error(), 
 		})
 		return
 	}
@@ -127,5 +122,4 @@ func (h *userHandler) DeleteUser(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusOK, user)
 	}
-	
 }

@@ -11,7 +11,6 @@ type bookingService struct {
 	seatTicketRepository repository.SeatTicketRepository
 }
 
-
 func NewBookingService(bookingRepository repository.BookingRepository, seatTicketRepository repository.SeatTicketRepository) bookingService {
 	return bookingService{
 		bookingRepository:    bookingRepository,
@@ -32,7 +31,7 @@ func (s bookingService) GetAllBooking() ([]BookingResponse, error) {
 		booking := BookingResponse{
 			Ticket_name:  booking.Ticket_name,
 			Booking_seat: booking.Booking_seat,
-			// Seat_no:      booking.Seat_no,
+			Seat_id:      booking.Seat_id,
 		}
 		bookingReponse = append(bookingReponse, booking)
 	}
@@ -41,11 +40,9 @@ func (s bookingService) GetAllBooking() ([]BookingResponse, error) {
 }
 
 func (s bookingService) CreateNewBooking(req *BookingRequest) (common.CommonResponse, error) {
-	// booking, err := s.bookingRepository.GetAll()
 	var response common.CommonResponse
 	fmt.Println("Data :: ", req.Booking_seat)
-	// fmt.Println("Data :: ", req.User_id)
-
+	
 	// create to Booking table
 	data := repository.Booking{
 		Booking_id:   req.Booking_id,
@@ -100,7 +97,7 @@ func (s bookingService) GetAllBookingByUser(id string) ([]BookingResponse, error
 		booking := BookingResponse{
 			Ticket_name:  booking.Ticket_name,
 			Booking_seat: booking.Booking_seat,
-			Seat_id: booking.Seat_id,
+			Seat_id:      booking.Seat_id,
 		}
 		bookingReponse = append(bookingReponse, booking)
 	}

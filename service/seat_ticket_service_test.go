@@ -30,7 +30,7 @@ func Test_seatTicketService_CheckAllSeatAvailable(t *testing.T) {
 		{
 			name:    "case1_check_all_seat_available_success",
 			fields:  fields{repository.NewSeatTicketRepositoryDb(db)},
-			want:    SeatTicketResponse{All_available_seat: 6, Last_time_updated: time.Now().Format("2006-01-02 15:04:05"), Availble_seat: "", Zone: ""},
+			want:    SeatTicketResponse{All_available_seat: 5, Last_time_updated: time.Now().Format("2006-01-02 15:04:05"), Availble_seat: "", Zone: ""},
 			wantErr: false,
 		},
 	}

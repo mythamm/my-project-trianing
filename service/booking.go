@@ -7,11 +7,11 @@ type BookingResponse struct {
 	Ticket_name string `json:"ticket_name"`
 	// Booking_id   string `db:"booking_id"`
 	Booking_seat string `json:"booking_seat"`
-	Seat_id     int    `json:"seat_id"`
+	Seat_id      int    `json:"seat_id"`
 }
 
 type BookingRequest struct {
-	Booking_id     string `json:"booking_id"`
+	Booking_id     string `json:"booking_id" validate:"required"`
 	User_id        string `json:"user_id"`
 	Ticket_name    string `json:"ticket_name"`
 	Booking_seat   string `json:"booking_seat"`
@@ -23,8 +23,6 @@ type BookingRequest struct {
 
 type BookingService interface {
 	GetAllBooking() ([]BookingResponse, error)
-	// GetBooking()
 	CreateNewBooking(*BookingRequest) (common.CommonResponse, error)
 	GetAllBookingByUser(string) ([]BookingResponse, error)
-
 }

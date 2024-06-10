@@ -19,8 +19,6 @@ func NewUserRepositoryDb(db *gorm.DB) userRepositoryDb {
 // CreateUser implements UserRepository.
 func (u userRepositoryDb) CreateUser(data User_info) (string, error) {
 	fmt.Println("Data for create : ", data)
-	// result := u.db.Create(&data)
-	// result := u.db.Raw("INSERT INTO user_info (user_id, username, created_at, lasted_login) VALUES(?, ?, ?, ?);" ,data.User_id, data.Username ,data.Created_at, "last").Commit().Error
 	result := u.db.Exec("INSERT INTO user_info (user_id, username, created_at, lasted_login) VALUES(?, ?, ?, ?);", data.User_id, data.Username, data.Created_at, data.Lasted_login)
 
 	fmt.Println("result :", result)
@@ -36,7 +34,6 @@ func (u userRepositoryDb) CreateUser(data User_info) (string, error) {
 func (u userRepositoryDb) GetById(id string) (User_info, error) {
 	data := User_info{}
 
-	// err := r.db.First(&booking, id).Error
 	result := u.db.Raw("SELECT * from user_info WHERE user_id = ?", id).Scan(&data)
 
 	if result.Error != nil {
@@ -47,11 +44,7 @@ func (u userRepositoryDb) GetById(id string) (User_info, error) {
 }
 
 // UpdateLastLogin implements UserRepository.
-func (u userRepositoryDb) UpdateLastLogin(id string) error {
-	// data := User{}
-
-	// err := r.db.First(&booking, id).Error
-	// UPDATE user_info SET lasted_login = datetime('now', 'localtime') WHERE user_id='USID00001';
+func (u userRepositoryDb) UpdateLastLogin(id string) error {	
 	result := u.db.Exec("UPDATE user_info SET lasted_login = datetime('now', 'localtime') WHERE user_id=?", id)
 
 	if result.Error != nil {
@@ -62,15 +55,10 @@ func (u userRepositoryDb) UpdateLastLogin(id string) error {
 		return err
 	}
 	return nil
-
 }
 
 func (u userRepositoryDb) DeleteUser(id string) error {
-	// data := User{}
-	// result := u.db.Delete(id)
-	// result := u.db.Raw("DELETE FROM user_info WHERE user_id=? ;", id)
 	result := u.db.Exec("DELETE FROM user_info WHERE user_id=? ;", id)
-
 	fmt.Println("deleted row record : ", result.RowsAffected)
 
 	if result.Error != nil {

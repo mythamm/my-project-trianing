@@ -19,7 +19,6 @@ func Test_userService_CreateUser(t *testing.T) {
 	if err != nil {
 		fmt.Println("Error connect database : ", err)
 	}
-	// fmt.Println("Connect database : ", db)
 
 	type fields struct {
 		userRepository repository.UserRepository
@@ -201,14 +200,14 @@ func Test_userService_DeleteUser(t *testing.T) {
 		{
 			name:    "case1_delete_user_success",
 			fields:  fields{repository.NewUserRepositoryDb(db)},
-			args:    args{"UID00000001"},
+			args:    args{"USID00004"},
 			want:    common.CommonResponse{Status_code: 200, Status_desc: "Delete user Success"},
 			wantErr: false,
 		},
 		{
 			name:    "case2_delete_user_fail",
 			fields:  fields{repository.NewUserRepositoryDb(db)},
-			args:    args{"UID00000001"},
+			args:    args{"UID00000009"},
 			want:    common.CommonResponse{Status_code: 500, Status_desc: "Cannot delete user : don't have this record"},
 			wantErr: true,
 		},

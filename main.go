@@ -4,19 +4,14 @@ import (
 	"haxagonal-train/handler"
 	"haxagonal-train/repository"
 	"haxagonal-train/service"
-	// "net/http"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-
-	// "database/sql"
-	// "github.com/mattn/go-sqlite3"
 	"fmt"
 
 	"gorm.io/driver/sqlite"
 )
 
-// const bookingDb = "/booking.db"
 const bookingDb = "/Users/a677161/Code/haxagonal/booking.db"
 
 
@@ -28,16 +23,13 @@ func main() {
 		fmt.Println("Error connect database : ", err)
 	}
 	fmt.Println("Connect database : ", db)
+		// Migrate the schema
+		db.AutoMigrate(&repository.Booking{})
+		db.AutoMigrate(&repository.SeatTicket{})
+		db.AutoMigrate(&repository.SeatTicketInfo{})
+		db.AutoMigrate(&repository.User_info{})
 
 	// ----- Bookings -----
-	// Migrate the schema
-	db.AutoMigrate(&repository.Booking{})
-	db.AutoMigrate(&repository.SeatTicket{})
-	db.AutoMigrate(&repository.SeatTicketInfo{})
-	db.AutoMigrate(&repository.User_info{})
-
-
-
 	bookingRepository := repository.NewBookRepositoryDb(db)
 	seatTicketRepository := repository.NewSeatTicketRepositoryDb(db)
 
@@ -50,9 +42,6 @@ func main() {
 	// ----- Bookings -----
 
 	// ----- User -----
-	// db.Table("user_info").AutoMigrate(&repository.User_info{})
-	// db.AutoMigrate(&repository.User_info{})
-
 	userRepository := repository.NewUserRepositoryDb(db)
 	userService := service.NewUserService(userRepository)
 	userHandler := handler.NewUserHandler(userService)
@@ -65,9 +54,6 @@ func main() {
 
 
 	// ----- Seat Ticket -----
-	// db.AutoMigrate(&repository.SeatTicket{})
-	// db.AutoMigrate(&repository.SeatTicketInfo{})
-
 	// seatTicketRepository := repository.NewSeatTicketRepositoryDb(db)
 	seatTicketService := service.NewSeatTicketService(seatTicketRepository)
 	seatTicketHandler := handler.NewSeatTicketHandler(seatTicketService)

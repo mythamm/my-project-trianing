@@ -16,8 +16,8 @@ func NewSeatTicketRepositoryDb(db *gorm.DB) seatTicketRepositoryDb {
 
 // CheckAllSeatAvailable implements SeatTicketRepository.
 func (s seatTicketRepositoryDb) CheckAllSeatAvailable() (int, error) {
-	// allAvailbleCount := 0
-	// result := s.db.Find(&seat)
+	fmt.Println("----- CheckAllSeatAvailable ------")
+
 	seat := []SeatTicketInfo{}
 	result := s.db.Raw("SELECT * FROM seat_ticket_info WHERE booking_flag != 'Y';").Scan(&seat)
 
@@ -29,13 +29,8 @@ func (s seatTicketRepositoryDb) CheckAllSeatAvailable() (int, error) {
 
 // UpdateBookingFlag implements SeatTicketRepository.
 func (s seatTicketRepositoryDb) UpdateBookingFlag(data SeatTicketInfo) error {
-	// data := User{}
 	fmt.Println("----- UpdateBookingFlag ------")
-
-	fmt.Println("data : " ,data)
-
-	// err := r.db.First(&booking, id).Error
-	// UPDATE user_info SET lasted_login = datetime('now', 'localtime') WHERE user_id='USID00001';
+	fmt.Println("UpdateBookingFlag data : " ,data)
 	result := s.db.Exec("UPDATE seat_ticket_info SET booking_flag=? WHERE seat_id=?;", data.Booking_flag ,data.Seat_id)
 
 	if result.Error != nil {

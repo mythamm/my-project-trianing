@@ -16,5 +16,5 @@ type SeatTicketInfo struct {
 
 type SeatTicketRepository interface {
 	CheckAllSeatAvailable() (int, error)
-	UpdateBookingFlag(SeatTicketInfo)(error)
+	UpdateBookingFlag(SeatTicketInfo) error
 }

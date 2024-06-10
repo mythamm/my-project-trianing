@@ -7,8 +7,8 @@ type Booking struct {
 	Booking_seat   string `db:"booking_seat"`
 	Payment_method string `db:"payment_method"`
 	Payment_status string `db:"payment_status"`
-	Seat_id        int `db:"seat_id"`
-	Amount         int `db:"amount"`
+	Seat_id        int    `db:"seat_id"`
+	Amount         int    `db:"amount"`
 }
 
 type BookingRepository interface {
