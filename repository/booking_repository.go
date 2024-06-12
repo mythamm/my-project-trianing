@@ -28,7 +28,12 @@ func (r bookRepositoryDb) GetAll() ([]Booking, error) {
 func (r bookRepositoryDb) GetById(id string) ([]Booking, error) {
 	booking := []Booking{}
 
-	result := r.db.Raw("SELECT * from bookings WHERE user_id = ?", id).Scan(&booking)
+	// r.db.Table("bookings")
+	result := r.db.Where("user_id =?" ,id).Find(&booking)
+
+	fmt.Println("result bookings : " , booking)
+
+	// result := r.db.Raw("SELECT * from bookings WHERE user_id = ?", id).Scan(&booking)
 
 	if result.Error != nil {
 		fmt.Println("Error : ", result.Error)
@@ -39,7 +44,9 @@ func (r bookRepositoryDb) GetById(id string) ([]Booking, error) {
 // CreateNew implements BookingRepository.
 func (r bookRepositoryDb) CreateNew(data Booking) error {
 	fmt.Println("Create New Booking : ", data)
-	result := r.db.Exec("INSERT INTO bookings(booking_id, user_id, ticket_name, booking_seat ,seat_id ,amount) VALUES(? ,? ,? ,? ,?, ?);", data.Booking_id, data.User_id, data.Ticket_name, data.Booking_seat, data.Seat_id, data.Amount)
+
+	result := r.db.Create(&data)
+	// result := r.db.Exec("INSERT INTO bookings(booking_id, user_id, ticket_name, booking_seat ,seat_id ,amount) VALUES(? ,? ,? ,? ,?, ?);", data.Booking_id, data.User_id, data.Ticket_name, data.Booking_seat, data.Seat_id, data.Amount)
 
 	if result.Error != nil {
 		fmt.Println("Error : ", result.Error)

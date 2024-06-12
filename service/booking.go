@@ -21,6 +21,10 @@ type BookingRequest struct {
 	Amount         int    `json:"amount"`
 }
 
+type GetBookingByUserReq struct {
+	User_id        string `json:"user_id" validate:"required"`
+}
+
 type BookingService interface {
 	GetAllBooking() ([]BookingResponse, error)
 	CreateNewBooking(*BookingRequest) (common.CommonResponse, error)

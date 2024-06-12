@@ -19,7 +19,8 @@ func (s seatTicketRepositoryDb) CheckAllSeatAvailable() (int, error) {
 	fmt.Println("----- CheckAllSeatAvailable ------")
 
 	seat := []SeatTicketInfo{}
-	result := s.db.Raw("SELECT * FROM seat_ticket_info WHERE booking_flag != 'Y';").Scan(&seat)
+	result := s.db.Where("booking_flag != ?", "Y").Find(&seat)
+	// result := s.db.Raw("SELECT * FROM seat_ticket_info WHERE booking_flag != 'Y';").Scan(&seat)
 
 	if result.Error != nil {
 		fmt.Println("Error : ", result.Error)
@@ -31,7 +32,9 @@ func (s seatTicketRepositoryDb) CheckAllSeatAvailable() (int, error) {
 func (s seatTicketRepositoryDb) UpdateBookingFlag(data SeatTicketInfo) error {
 	fmt.Println("----- UpdateBookingFlag ------")
 	fmt.Println("UpdateBookingFlag data : " ,data)
-	result := s.db.Exec("UPDATE seat_ticket_info SET booking_flag=? WHERE seat_id=?;", data.Booking_flag ,data.Seat_id)
+
+	result := s.db.Model(&SeatTicketInfo{}).Where("seat_id =? ", data.Seat_id).Update("booking_flag" , data.Booking_flag)
+	// result := s.db.Exec("UPDATE seat_ticket_info SET booking_flag=? WHERE seat_id=?;", data.Booking_flag ,data.Seat_id)
 
 	if result.Error != nil {
 		fmt.Println("Error : ", result.Error)

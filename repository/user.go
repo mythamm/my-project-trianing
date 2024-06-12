@@ -3,9 +3,9 @@ package repository
 type User_info struct {
 	// user_id	username	created_at	lasted_login
 	User_id      string `gorm:"primary_key user_id"`
-	Username     string `db:"username"`
-	Created_at   string `db:"created_at"`
-	Lasted_login string `db:"lasted_login"`
+	Username     string `gorm:"username"`
+	Created_at   string `gorm:"created_at"`
+	Lasted_login string `gorm:"lasted_login"`
 }
 
 // TableName overrides the table name used by User to `user_info`

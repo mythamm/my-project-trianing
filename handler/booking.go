@@ -67,7 +67,7 @@ func (h *bookingHandler) GetBookingByUser(c *gin.Context) {
 	fmt.Println("----- Get All Booking By Userid ----")
 	var books []service.BookingResponse
 
-	req := service.BookingRequest{}
+	req := service.GetBookingByUserReq{}
 	err := c.BindJSON(&req)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{

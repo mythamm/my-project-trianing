@@ -14,4 +14,6 @@ type SeatTicketResponse struct {
 
 type SeatTicketService interface {
 	CheckAllSeatAvailable() (SeatTicketResponse, error)
+	CheckAvailableByZone() (SeatTicketResponse, error)
+	UpdatePaymentStatus() (error)
 }
